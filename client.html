@@ -9,23 +9,26 @@
     function init() {
 
       // Connect to Web Socket
-      ws = new WebSocket("ws://localhost:9001/");
+      //var ip_addr = document.location.hostname;//客服端要访问的主机IP地址（列如：192.168.4.250）获取主机A的IP地址（前提是client.html来自于主机A，
+      //否则不能用此函数来获取主机地址）
+     var ipaddr = "192.168.4.250";
+      ws = new WebSocket("ws://"+ipaddr+":9001/");//创建客户端并向服务器请求连接。
 
       // Set event handlers.
-      ws.onopen = function() {
+      ws.onopen = function() { //注册连接成功后的回调函数
         output("onopen");
       };
       
-      ws.onmessage = function(e) {
+      ws.onmessage = function(e) {//注册消息处理函数
         // e.data contains received string.
         output("onmessage: " + e.data);
       };
       
-      ws.onclose = function() {
+      ws.onclose = function() {//注册断开连接的处理函数
         output("onclose");
       };
 
-      ws.onerror = function(e) {
+      ws.onerror = function(e) {//注册连接失败的处理函数
         output("onerror");
         console.log(e)
       };
